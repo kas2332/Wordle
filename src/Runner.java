@@ -11,20 +11,35 @@ public class Runner {
         if (e.getKeyCode() >= KeyEvent.VK_A && e.getKeyCode() <= KeyEvent.VK_Z) {
             wordleGUI.jLabels[row][col].setText(String.valueOf(e.getKeyChar()));
             wordleGUI.jLabels[row][col].setEditable(false);
-            if (col == 5) {
-                System.out.println(1);
-                wordleGUI.jLabels[row + 1][0].setEditable(true);
-            }
-            else if (row == 7) {
-                System.out.println(2);
+            if (col == 4) {
                 wordleGUI.jLabels[row][col].setEditable(true);
             }
             else {
-                System.out.println(3);
-                System.out.println(col);
-                System.out.println(row);
                 wordleGUI.jLabels[row][col + 1].setEditable(true);
             }
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if (col == 0) {
+                wordleGUI.jLabels[row][col].setEditable(true);
+            }
+            else {
+                wordleGUI.jLabels[row][col - 1].setEditable(true);
+            }
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+           if (col == 4) {
+                wordleGUI.jLabels[row][col].setEditable(true);
+            }
+            else {
+                wordleGUI.jLabels[row][col + 1].setEditable(true);
+            }
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_BACKSPACE) {
+            wordleGUI.jLabels[row][col].setText(null);
+            wordleGUI.jLabels[row][col].setEditable(true);
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_ENTER) {//ajfljasnfja
+            
         }
     }
 }
