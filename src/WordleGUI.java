@@ -7,14 +7,16 @@ public class WordleGUI extends javax.swing.JPanel {
     MyJLabel[][] jLabels = new MyJLabel[7][5];
     KeyListener listener = new KeyListener() {
         @Override
-        public void keyTyped(KeyEvent e) {}
+        public void keyTyped(KeyEvent e) {
+        }
 
         @Override
-        public void keyPressed(KeyEvent e) {}
+        public void keyPressed(KeyEvent e) {
+        }
 
         @Override
         public void keyReleased(KeyEvent e) {
-            int row = -1,col = -1;
+            int row = -1, col = -1;
             for (int r = 0; r < 7; r++) {
                 for (int c = 0; c < 5; c++) {
                     if (jLabels[r][c].getEditable()) {
@@ -30,10 +32,12 @@ public class WordleGUI extends javax.swing.JPanel {
 
         }
     };
-    public static void main (String[] args) {
+
+    public static void main(String[] args) {
         WordleGUI wordleGUIObj = new WordleGUI();
         wordleGUIObj.wordleGUIMaker();
     }
+
     public void wordleGUIMaker() {
 
         //<editor-fold desc="Label and Panel Declaration">
@@ -206,7 +210,6 @@ public class WordleGUI extends javax.swing.JPanel {
                                 .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addContainerGap())
         );
-
 
 
         frame.pack();
