@@ -11,6 +11,7 @@ public class MyJLabel extends JLabel {
         this.setText("");
         this.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         this.setPreferredSize(new java.awt.Dimension(50, 50));
+        this.setEditable(false);
     }
     public void setEditable(boolean editable) {
         isEditable = editable;

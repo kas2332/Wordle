@@ -4,7 +4,7 @@ import java.awt.event.KeyListener;
 
 public class WordleGUI extends javax.swing.JPanel {
     Runner runner = new Runner();
-
+    MyJLabel[][] jLabels = new MyJLabel[7][5];
     KeyListener listener = new KeyListener() {
         @Override
         public void keyTyped(KeyEvent e) {}
@@ -14,10 +14,22 @@ public class WordleGUI extends javax.swing.JPanel {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            runner.printChar(e);
+            int row = -1,col = -1;
+            for (int r = 0; r < 7; r++) {
+                for (int c = 0; c < 5; c++) {
+                    if (jLabels[r][c].getEditable()) {
+                        row = r;
+                        col = c;
+                    }
+                }
+            }
+            if (row < 0 || col < 0) {
+                System.exit(-10000);
+            }
+            runner.printChar(e, row, col);
+
         }
     };
-
     public static void main (String[] args) {
         WordleGUI wordleGUIObj = new WordleGUI();
         wordleGUIObj.wordleGUIMaker();
@@ -26,13 +38,12 @@ public class WordleGUI extends javax.swing.JPanel {
 
         //<editor-fold desc="Label and Panel Declaration">
         JPanel MainPanel = new JPanel();
-
-        JLabel[][] jLabels = new JLabel[7][5];
         for (int row = 0; row < 7; row++) {
             for (int col = 0; col < 5; col++) {
                 jLabels[row][col] = new MyJLabel();
             }
         }
+        jLabels[0][0].setEditable(true);
         //</editor-fold>
 
 
@@ -199,6 +210,8 @@ public class WordleGUI extends javax.swing.JPanel {
 
 
         frame.pack();
+        frame.setDefaultCloseOperation(3);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }// </editor-fold>
 
