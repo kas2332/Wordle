@@ -4,6 +4,12 @@ import java.awt.*;
 public class MyJLabel extends JLabel implements Runnable {
     boolean isEditable = false;
     Font font = new Font("Comic Sans MS", Font.PLAIN, 12);
+    Color color = new Color(Color.DARK_GREY);
+    
+    @Override
+    public void run() {
+        changeBackground();
+    }
 
     public MyJLabel() {
         super();
@@ -13,27 +19,21 @@ public class MyJLabel extends JLabel implements Runnable {
         this.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         this.setPreferredSize(new java.awt.Dimension(50, 50));
         this.setEditable(false);
+        this.setBackground(color);
+        this.setOpaque(false);
     }
 
     public void setEditable(boolean editable) {
-        isEditable = editable;
-        changeBackground();
+        this.isEditable = editable;
+        if (isEditable) {
+            this.setOpaque(true);
+        }
+        else {
+            this.setOpaque(false);
+        }
     }
 
     public boolean getEditable() {
         return isEditable;
-    }
-
-    public void changeBackground () {
-        if (this.getEditable()) {
-
-        }
-    }
-
-    Thread t = new Thread(new MyJLabel());
-    t.start();
-    @Override
-    public void run() {
-
     }
 }
