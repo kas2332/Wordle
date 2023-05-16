@@ -1,15 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class MyJLabel extends JLabel implements Runnable {
+public class MyJLabel extends JLabel {
     boolean isEditable = false;
     Font font = new Font("Comic Sans MS", Font.PLAIN, 12);
-    Color color = new Color(Color.DARK_GREY);
-    
-    @Override
-    public void run() {
-        changeBackground();
-    }
+    Color base = Color.LIGHT_GRAY, highlighted = Color.CYAN, right = Color.GREEN, wrong = Color.YELLOW, none = Color.DARK_GRAY;
 
     public MyJLabel() {
         super();
@@ -19,17 +14,22 @@ public class MyJLabel extends JLabel implements Runnable {
         this.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         this.setPreferredSize(new java.awt.Dimension(50, 50));
         this.setEditable(false);
-        this.setBackground(color);
-        this.setOpaque(false);
+        this.setBackground(base);
+        this.setOpaque(true);
     }
 
     public void setEditable(boolean editable) {
-        this.isEditable = editable;
+        isEditable = editable;
+        System.out.println(isEditable);
         if (isEditable) {
-            this.setOpaque(true);
+            System.out.println(1);
+            //this.setOpaque(true);
+            this.setBackground(highlighted);
         }
         else {
-            this.setOpaque(false);
+            System.out.println(2);
+           // this.setOpaque(false);
+            this.setBackground(base);
         }
     }
 
