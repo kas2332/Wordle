@@ -11,8 +11,9 @@ public class Runner {
     public void printChar(KeyEvent e, int row, int col) {
         boolean backspace = (e.getKeyCode() == KeyEvent.VK_BACK_SPACE);
         boolean letter = (e.getKeyCode() >= KeyEvent.VK_A && e.getKeyCode() <= KeyEvent.VK_Z);
+        boolean enter = (e.getKeyCode() == KeyEvent.VK_ENTER);
 
-        if (backspace || letter) {
+        if ((backspace || letter || enter) && row < 6) {
             wordleGUI.jLabels[row][col].setEditable(false);
             if (backspace) {
                 if (wordleGUI.jLabels[row][col].getText().equals("") && col != 0) {
@@ -22,14 +23,22 @@ public class Runner {
                     wordleGUI.jLabels[row][col].setText("");
                     wordleGUI.jLabels[row][col].setEditable(true);
                 }
-            } else {
+            } else if (letter) {
                 wordleGUI.jLabels[row][col].setText(String.valueOf(e.getKeyChar()).toUpperCase());
                 if (col == 4) {
                     wordleGUI.jLabels[row][col].setEditable(true);
                 } else {
                     wordleGUI.jLabels[row][col + 1].setEditable(true);
                 }
+            } else if (isValidGuess(row)){
+                wordleGUI.jLabels[row][col].setEditable(false);
+                wordleGUI.jLabels[row + 1][0].setEditable(true);
             }
         }
+    }
+
+    public boolean isValidGuess (int row) {
+        System.out.println("idk");
+        return true;
     }
 }
