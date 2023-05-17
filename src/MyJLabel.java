@@ -20,15 +20,9 @@ public class MyJLabel extends JLabel {
 
     public void setEditable(boolean editable) {
         isEditable = editable;
-        System.out.println(isEditable);
         if (isEditable) {
-            System.out.println(1);
-            //this.setOpaque(true);
             this.setBackground(highlighted);
-        }
-        else {
-            System.out.println(2);
-           // this.setOpaque(false);
+        } else {
             this.setBackground(base);
         }
     }

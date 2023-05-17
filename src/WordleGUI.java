@@ -25,7 +25,7 @@ public class WordleGUI extends javax.swing.JPanel {
                     }
                 }
             }
-            if (row < 0 || col < 0) {
+            if (row < 0) {
                 System.exit(-10000);
             }
             runner.printChar(e, row, col);
@@ -213,7 +213,7 @@ public class WordleGUI extends javax.swing.JPanel {
 
 
         frame.pack();
-        frame.setDefaultCloseOperation(3);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }// </editor-fold>
