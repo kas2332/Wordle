@@ -30,4 +30,16 @@ public class MyJLabel extends JLabel {
     public boolean getEditable() {
         return isEditable;
     }
+
+    public void setRight() {
+        this.setBackground(right);
+    }
+
+    public void setWrong() {
+        this.setBackground(wrong);
+    }
+
+    public void setNone() {
+        this.setBackground(none);
+    }
 }

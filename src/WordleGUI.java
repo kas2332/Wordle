@@ -3,6 +3,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class WordleGUI extends javax.swing.JPanel {
+    JFrame frame;
     Runner runner = new Runner();
     MyJLabel[][] jLabels = new MyJLabel[7][5];
     KeyListener listener = new KeyListener() {
@@ -28,7 +29,11 @@ public class WordleGUI extends javax.swing.JPanel {
             if (row < 0) {
                 System.exit(-10000);
             }
-            runner.printChar(e, row, col);
+            if (!runner.frameVisible && (e.getKeyCode() == KeyEvent.VK_ENTER)) {
+                runner.frameVisible = true;
+            } else if (runner.frameVisible) {
+                runner.printChar(e, row, col);
+            }
 
         }
     };
@@ -51,7 +56,7 @@ public class WordleGUI extends javax.swing.JPanel {
         //</editor-fold>
 
 
-        JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.addKeyListener(listener);
 
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
