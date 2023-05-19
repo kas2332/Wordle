@@ -9,6 +9,7 @@ public class Runner {
     static String[] words = new String[14855];
     char[] alphabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
     boolean frameVisible = true;
+    static String hiddenWord;
 
     public static void main(String[] args) {
         Runner runner = new Runner();
@@ -26,6 +27,8 @@ public class Runner {
                 throw new RuntimeException(e);
             }
         }
+        hiddenWord = words[(int) (Math.random() * 14855)];
+        System.out.println(hiddenWord);
     }
 
     public void printChar(KeyEvent e, int row, int col) {
@@ -43,12 +46,11 @@ public class Runner {
                 wordleGUI.jLabels[row][col].setEditable(true);
             } else if (checkIfIsValidGuess(row)) {
                 doEnter(row);
-            } else if (enter && !checkIfIsValidGuess(row)) {
+            } else if (!checkIfIsValidGuess(row)) {
                 displayMessage("invalid guess");
                 wordleGUI.jLabels[row][col].setEditable(true);
             } else {
                 displayMessage("Error");
-                System.exit(-99999);
             }
         }
     }
@@ -73,19 +75,17 @@ public class Runner {
     }
 
     public void doEnter(int row) {
+        checkLetters(row);
         if (row < 5) {
             wordleGUI.jLabels[row + 1][0].setEditable(true);
-        } else if (row == 5) {
-            doLastGuess();
         }
     }
 
     public boolean checkIfIsValidGuess(int row) {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < 5; i++) {
-            s.append(wordleGUI.jLabels[row][i].getText());
+            s.append(wordleGUI.jLabels[row][i].getText().toLowerCase());
         }
-        System.out.println(binarySearch(s.toString().toLowerCase()));
         return (s.length() == 5) && (binarySearch(s.toString().toLowerCase()) >= 0);
     }
 
@@ -104,11 +104,6 @@ public class Runner {
 
         while (lowerBound <= upperBound) {
             int middle = lowerBound + (upperBound - lowerBound) / 2;
-
-            System.out.println(lowerBound);
-            System.out.println(upperBound);
-            System.out.println(middle);
-            System.out.println(words[middle]);
             int res = x.compareTo(words[middle]);
 
             // Check if x is present at mid
@@ -126,11 +121,62 @@ public class Runner {
         return -1;
     }
 
-    public void doLastGuess() {
-        System.out.println("IDK");
+    public void checkLetters (int row) {
+        StringBuilder guess = new StringBuilder();
+        for (int i = 0; i < 5; i++) {
+            guess.append(wordleGUI.jLabels[row][i].getText().toLowerCase());
+        }
+
+        for (int i = 0; i < hiddenWord.length(); i++) {
+            System.out.println(hiddenWord);
+            System.out.println(guess);
+            System.out.println(hiddenWord.charAt(i));
+            System.out.println(guess.charAt(i));
+            if (hiddenWord.charAt(i) == guess.charAt(i)) {
+                System.out.println(1);
+                wordleGUI.jLabels[row][i].setRight();
+            } else if (hiddenWord.indexOf(guess.charAt(i)) >= 0) {
+                System.out.println(2);
+                wordleGUI.jLabels[row][i].setWrong();
+            } else {
+                System.out.println(3);
+                wordleGUI.jLabels[row][i].setNone();
+            }
+        }
+        checkWin(row);
+    }
+
+    public void checkWin (int row) {
+        boolean correct = true;
+        for (int i = 0; i < 5; i++) {
+            if (!wordleGUI.jLabels[row][i].isRight) {
+                correct = false;
+                break;
+            }
+        }
+        if (correct) {
+            doWin(row);
+        } else if (row == 5) {
+            doLose();
+        }
+    }
+
+    public void doWin (int row) {
+        for (int i = 0; i < 5; i++) {
+            wordleGUI.jLabels[6][i].setText(wordleGUI.jLabels[row][i].getText());
+        }
+        displayMessage("win");
+    }
+
+    public void doLose () {
+        for (int i = 0; i < 5; i++) {
+            wordleGUI.jLabels[6][i].setText(String.valueOf(hiddenWord.charAt(i)));
+        }
+        displayMessage("lose");
     }
 
     public void displayMessage(String message) {
+        int option;
         switch (message) {
             case "invalid guess" -> {
                 wordleGUI.frame.setVisible(false);
@@ -138,10 +184,20 @@ public class Runner {
                 JOptionPane.showMessageDialog(null, "Error, word is not valid.", "Error", JOptionPane.ERROR_MESSAGE);
                 wordleGUI.frame.setVisible(true);
             }
-            case "lose" -> JOptionPane.showMessageDialog(null, "Sorry, you lost.", "Error", JOptionPane.ERROR_MESSAGE);
-            case "win" -> JOptionPane.showMessageDialog(null, "Hooray, you win!", "Error", JOptionPane.ERROR_MESSAGE);
-            case "Error" ->
-                    JOptionPane.showMessageDialog(null, "Error, something went wrong. Please try again later", "Error", JOptionPane.ERROR_MESSAGE);
+            case "lose" -> {
+                wordleGUI.frame.setVisible(false);
+                frameVisible = false;
+                option = JOptionPane.showConfirmDialog(null, "Sorry, you lost.\nDo you want to ", "Lost :(", JOptionPane.QUESTION_MESSAGE);
+            }
+            case "win" -> {
+                wordleGUI.frame.setVisible(false);
+                frameVisible = false;
+                option = JOptionPane.showConfirmDialog(null, "Hooray, you win!\nDo you want to play again?", "Win!", JOptionPane.YES_NO_OPTION);
+            }
+            case "Error" -> {
+                JOptionPane.showMessageDialog(null, "Error, something went wrong. Please try again later", "Error", JOptionPane.ERROR_MESSAGE);
+                System.exit(-99999);
+            }
         }
     }
 }
