@@ -10,12 +10,14 @@ public class Runner {
     char[] alphabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
     boolean frameVisible = true;
     static String hiddenWord;
+    static int oneGuess = 0, twoGues = 0, threeGuess = 0; fourGuess = 0; fiveGuess = 0; sixGuess = 0; lose = 0, win = 0, total = 0;
 
     public static void main(String[] args) {
         Runner runner = new Runner();
         runner.readWordsList();
         wordleGUI = new WordleGUI();
         wordleGUI.wordleGUIMaker();
+        total++;
     }
 
     public void readWordsList() {
@@ -170,6 +172,17 @@ public class Runner {
         for (int i = 0; i < 5; i++) {
             wordleGUI.jLabels[6][i].setText(wordleGUI.jLabels[row][i].getText());
         }
+        win++;
+        
+        switch (row) {
+                case 0 -> oneGues++;
+                    case 1 -> twoGuess++;
+                    case 2 -> threeGuess++;
+                    case 3 -> fourGuess++;
+                    case 4 -> fiveGuess++;
+                    case 5 -> sixGuess++;
+        }
+        
         displayMessage("win");
     }
 
@@ -183,6 +196,20 @@ public class Runner {
     public void playAgain() {
         findHiddenWord();
         wordleGUI.wordleGUIMaker();
+    }
+    
+    public void exit() {
+        JOptionPane.showMessageDialog(null, "Here are your stats:\nTotal game played: " + total + "\n
+                                      Games won: " + win + " (" + (100*(win/total)) + "%)\n
+                                      Games lost: " + lose + " (" + (100*(lose/total)) + "%)\n
+                                      Games in one guess: " + oneGuess + " (" + (100*(oneGuess/total)) + "%)\n
+                                      Games in two guess: " + twoGuess + " (" + (100*(twoGuess/total)) + "%)\n
+                                      Games in three guess: " + threeGuess + " (" + (100*(threeGuess/total)) + "%)\n
+                                      Games in four guess: " + fourGuess + " (" + (100*(fourGuess/total)) + "%)\n
+                                      Games in five guess: " + fiveGuess + " (" + (100*(fiveGuess/total)) + "%)\n
+                                      Games in six guess: " + sixGuess + " (" + (100*(sixGuess/total)) + "%)\n\n\n
+                                      GoodBye! :)", "Bye", JOptionPane.PLAIN_MESSAGE);
+        System.exit(0);
     }
 
     public void displayMessage(String message) {
@@ -201,8 +228,7 @@ public class Runner {
                 if (option == JOptionPane.YES_OPTION) {
                     playAgain();
                 } else {
-                    JOptionPane.showMessageDialog(null, "GoodBye! :)", "Bye", JOptionPane.PLAIN_MESSAGE);
-                    System.exit(0);
+                    exit();
             }
             case "win" -> {
                 wordleGUI.frame.setVisible(false);
@@ -211,8 +237,7 @@ public class Runner {
                 if (option == JOptionPane.YES_OPTION) {
                     playAgain();
                 } else {
-                    JOptionPane.showMessageDialog(null, "GoodBye! :)", "Bye", JOptionPane.PLAIN_MESSAGE);
-                    System.exit(0);
+                    exit();
                 }
             }
             case "Error" -> {
