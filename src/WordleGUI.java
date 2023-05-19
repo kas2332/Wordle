@@ -56,7 +56,7 @@ public class WordleGUI extends javax.swing.JPanel {
         //</editor-fold>
 
 
-        frame = new JFrame();
+        frame = new JFrame("Wordle");
         frame.addKeyListener(listener);
 
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
