@@ -30,6 +30,11 @@ public class Runner {
         hiddenWord = words[(int) (Math.random() * 14855)];
         System.out.println(hiddenWord);
     }
+    
+    public void findHiddenWord () {
+        hiddenWord = words[(int) (Math.random() * 14855)];
+        System.out.println(hiddenWord);
+    }
 
     public void printChar(KeyEvent e, int row, int col) {
         boolean backspace = (e.getKeyCode() == KeyEvent.VK_BACK_SPACE);
@@ -174,6 +179,11 @@ public class Runner {
         }
         displayMessage("lose");
     }
+    
+    public void playAgain() {
+        findHiddenWord();
+        wordleGUI.wordleGUIMaker();
+    }
 
     public void displayMessage(String message) {
         int option;
@@ -188,11 +198,22 @@ public class Runner {
                 wordleGUI.frame.setVisible(false);
                 frameVisible = false;
                 option = JOptionPane.showConfirmDialog(null, "Sorry, you lost.\nDo you want to ", "Lost :(", JOptionPane.QUESTION_MESSAGE);
+                if (option == JOptionPane.YES_OPTION) {
+                    playAgain();
+                } else {
+                    JOptionPane.showMessageDialog(null, "GoodBye! :)", "Bye", JOptionPane.PLAIN_MESSAGE);
+                    System.exit(0);
             }
             case "win" -> {
                 wordleGUI.frame.setVisible(false);
                 frameVisible = false;
                 option = JOptionPane.showConfirmDialog(null, "Hooray, you win!\nDo you want to play again?", "Win!", JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    playAgain();
+                } else {
+                    JOptionPane.showMessageDialog(null, "GoodBye! :)", "Bye", JOptionPane.PLAIN_MESSAGE);
+                    System.exit(0);
+                }
             }
             case "Error" -> {
                 JOptionPane.showMessageDialog(null, "Error, something went wrong. Please try again later", "Error", JOptionPane.ERROR_MESSAGE);
