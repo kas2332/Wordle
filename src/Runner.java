@@ -83,9 +83,7 @@ public class Runner {
 
     public void doEnter(int row) {
         checkLetters(row);
-        if (row < 5) {
-            wordleGUI.jLabels[row + 1][0].setEditable(true);
-        }
+        wordleGUI.jLabels[row + 1][0].setEditable(true);
     }
 
     public boolean checkIfIsValidGuess(int row) {
@@ -135,18 +133,11 @@ public class Runner {
         }
 
         for (int i = 0; i < hiddenWord.length(); i++) {
-            System.out.println(hiddenWord);
-            System.out.println(guess);
-            System.out.println(hiddenWord.charAt(i));
-            System.out.println(guess.charAt(i));
             if (hiddenWord.charAt(i) == guess.charAt(i)) {
-                System.out.println(1);
                 wordleGUI.jLabels[row][i].setRight();
             } else if (hiddenWord.indexOf(guess.charAt(i)) >= 0) {
-                System.out.println(2);
                 wordleGUI.jLabels[row][i].setWrong();
             } else {
-                System.out.println(3);
                 wordleGUI.jLabels[row][i].setNone();
             }
         }
@@ -175,14 +166,13 @@ public class Runner {
         win++;
         
         switch (row) {
-                case 0 -> oneGues++;
-                    case 1 -> twoGuess++;
-                    case 2 -> threeGuess++;
-                    case 3 -> fourGuess++;
-                    case 4 -> fiveGuess++;
-                    case 5 -> sixGuess++;
+            case 0 -> oneGues++;
+            case 1 -> twoGuess++;
+            case 2 -> threeGuess++;
+            case 3 -> fourGuess++;
+            case 4 -> fiveGuess++;
+            case 5 -> sixGuess++;
         }
-        
         displayMessage("win");
     }
 
@@ -190,6 +180,7 @@ public class Runner {
         for (int i = 0; i < 5; i++) {
             wordleGUI.jLabels[6][i].setText(String.valueOf(hiddenWord.charAt(i)));
         }
+        lose++;
         displayMessage("lose");
     }
     
@@ -199,31 +190,20 @@ public class Runner {
     }
     
     public void exit() {
-        JOptionPane.showMessageDialog(null, "Here are your stats:\nTotal game played: " + total + "\n
-                                      Games won: " + win + " (" + (100*(win/total)) + "%)\n
-                                      Games lost: " + lose + " (" + (100*(lose/total)) + "%)\n
-                                      Games in one guess: " + oneGuess + " (" + (100*(oneGuess/total)) + "%)\n
-                                      Games in two guess: " + twoGuess + " (" + (100*(twoGuess/total)) + "%)\n
-                                      Games in three guess: " + threeGuess + " (" + (100*(threeGuess/total)) + "%)\n
-                                      Games in four guess: " + fourGuess + " (" + (100*(fourGuess/total)) + "%)\n
-                                      Games in five guess: " + fiveGuess + " (" + (100*(fiveGuess/total)) + "%)\n
-                                      Games in six guess: " + sixGuess + " (" + (100*(sixGuess/total)) + "%)\n\n\n
-                                      GoodBye! :)", "Bye", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Here are your stats:\nTotal game played: " + total + "\nGames won: " + win + " (" + (100*(win/total)) + "%)\nGames lost: " + lose + " (" + (100*(lose/total)) + "%)\nOne guess: " + oneGuess + " (" + (100*(oneGuess/total)) + "%)\nTwo guesses: " + twoGuess + " (" + (100*(twoGuess/total)) + "%)\nThree guesses: " + threeGuess + " (" + (100*(threeGuess/total)) + "%)\nFour guesses: " + fourGuess + " (" + (100*(fourGuess/total)) + "%)\nFive guesses: " + fiveGuess + " (" + (100*(fiveGuess/total)) + "%)\nSix guesses: " + sixGuess + " (" + (100*(sixGuess/total)) + "%)\n\n\nGoodBye! :)", "Bye", JOptionPane.PLAIN_MESSAGE);
         System.exit(0);
     }
 
     public void displayMessage(String message) {
         int option;
+        frameVisible = false;
         switch (message) {
             case "invalid guess" -> {
                 wordleGUI.frame.setVisible(false);
-                frameVisible = false;
                 JOptionPane.showMessageDialog(null, "Error, word is not valid.", "Error", JOptionPane.ERROR_MESSAGE);
                 wordleGUI.frame.setVisible(true);
             }
             case "lose" -> {
-                wordleGUI.frame.setVisible(false);
-                frameVisible = false;
                 option = JOptionPane.showConfirmDialog(null, "Sorry, you lost.\nDo you want to ", "Lost :(", JOptionPane.QUESTION_MESSAGE);
                 if (option == JOptionPane.YES_OPTION) {
                     playAgain();
@@ -231,8 +211,6 @@ public class Runner {
                     exit();
             }
             case "win" -> {
-                wordleGUI.frame.setVisible(false);
-                frameVisible = false;
                 option = JOptionPane.showConfirmDialog(null, "Hooray, you win!\nDo you want to play again?", "Win!", JOptionPane.YES_NO_OPTION);
                 if (option == JOptionPane.YES_OPTION) {
                     playAgain();
@@ -241,6 +219,7 @@ public class Runner {
                 }
             }
             case "Error" -> {
+                wordleGUI.frame.setVisible(false);
                 JOptionPane.showMessageDialog(null, "Error, something went wrong. Please try again later", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(-99999);
             }
