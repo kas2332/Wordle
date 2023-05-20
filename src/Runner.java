@@ -8,11 +8,11 @@ import java.text.DecimalFormat;
 public class Runner {
     static WordleGUI wordleGUI;
     static String[] words = new String[14855];
-    char[] alphabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-    boolean frameVisible = true;
     static String hiddenWord;
     static int oneGuess = 0, twoGuess = 0, threeGuess = 0, fourGuess = 0, fiveGuess = 0, sixGuess = 0, lose = 0, win = 0;
     static double total = 0;
+    char[] alphabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    boolean frameVisible = true;
     DecimalFormat df = new DecimalFormat("#.##");
 
     public static void main(String[] args) {

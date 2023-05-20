@@ -18,6 +18,10 @@ public class MyJLabel extends JLabel {
         this.setOpaque(true);
     }
 
+    public boolean getEditable() {
+        return isEditable;
+    }
+
     public void setEditable(boolean editable) {
         isEditable = editable;
         if (isEditable) {
@@ -25,10 +29,6 @@ public class MyJLabel extends JLabel {
         } else {
             this.setBackground(base);
         }
-    }
-
-    public boolean getEditable() {
-        return isEditable;
     }
 
     public void setRight() {
