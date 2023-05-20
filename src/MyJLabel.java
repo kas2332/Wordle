@@ -36,10 +36,6 @@ public class MyJLabel extends JLabel {
         this.isRight = true;
     }
 
-    public boolean getRight() {
-        return isRight;
-    }
-
     public void setWrong() {
         this.setBackground(wrong);
     }

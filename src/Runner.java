@@ -3,6 +3,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 
 public class Runner {
     static WordleGUI wordleGUI;
@@ -10,14 +11,15 @@ public class Runner {
     char[] alphabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
     boolean frameVisible = true;
     static String hiddenWord;
-    static int oneGuess = 0, twoGues = 0, threeGuess = 0; fourGuess = 0; fiveGuess = 0; sixGuess = 0; lose = 0, win = 0, total = 0;
+    static int oneGuess = 0, twoGuess = 0, threeGuess = 0, fourGuess = 0, fiveGuess = 0, sixGuess = 0, lose = 0, win = 0;
+    static double total = 0;
+    DecimalFormat df = new DecimalFormat("#.##");
 
     public static void main(String[] args) {
         Runner runner = new Runner();
         runner.readWordsList();
         wordleGUI = new WordleGUI();
         wordleGUI.wordleGUIMaker();
-        total++;
     }
 
     public void readWordsList() {
@@ -29,11 +31,11 @@ public class Runner {
                 throw new RuntimeException(e);
             }
         }
-        hiddenWord = words[(int) (Math.random() * 14855)];
-        System.out.println(hiddenWord);
+        findHiddenWord();
     }
-    
-    public void findHiddenWord () {
+
+    public void findHiddenWord() {
+        total++;
         hiddenWord = words[(int) (Math.random() * 14855)];
         System.out.println(hiddenWord);
     }
@@ -52,7 +54,7 @@ public class Runner {
             } else if (letter && !checkIfIsValidChar(e)) {
                 wordleGUI.jLabels[row][col].setEditable(true);
             } else if (checkIfIsValidGuess(row)) {
-                doEnter(row);
+                checkLetters(row);
             } else if (!checkIfIsValidGuess(row)) {
                 displayMessage("invalid guess");
                 wordleGUI.jLabels[row][col].setEditable(true);
@@ -82,7 +84,6 @@ public class Runner {
     }
 
     public void doEnter(int row) {
-        checkLetters(row);
         wordleGUI.jLabels[row + 1][0].setEditable(true);
     }
 
@@ -126,7 +127,7 @@ public class Runner {
         return -1;
     }
 
-    public void checkLetters (int row) {
+    public void checkLetters(int row) {
         StringBuilder guess = new StringBuilder();
         for (int i = 0; i < 5; i++) {
             guess.append(wordleGUI.jLabels[row][i].getText().toLowerCase());
@@ -141,10 +142,13 @@ public class Runner {
                 wordleGUI.jLabels[row][i].setNone();
             }
         }
-        checkWin(row);
+
+        if (checkWin(row)) {
+            doEnter(row);
+        }
     }
 
-    public void checkWin (int row) {
+    public boolean checkWin(int row) {
         boolean correct = true;
         for (int i = 0; i < 5; i++) {
             if (!wordleGUI.jLabels[row][i].isRight) {
@@ -154,43 +158,56 @@ public class Runner {
         }
         if (correct) {
             doWin(row);
+            return false;
         } else if (row == 5) {
             doLose();
+            return false;
         }
+        return true;
     }
 
-    public void doWin (int row) {
+    public void doWin(int row) {
         for (int i = 0; i < 5; i++) {
             wordleGUI.jLabels[6][i].setText(wordleGUI.jLabels[row][i].getText());
         }
-        win++;
-        
         switch (row) {
-            case 0 -> oneGues++;
+            case 0 -> oneGuess++;
             case 1 -> twoGuess++;
             case 2 -> threeGuess++;
             case 3 -> fourGuess++;
             case 4 -> fiveGuess++;
             case 5 -> sixGuess++;
         }
+        win++;
         displayMessage("win");
     }
 
-    public void doLose () {
+    public void doLose() {
         for (int i = 0; i < 5; i++) {
             wordleGUI.jLabels[6][i].setText(String.valueOf(hiddenWord.charAt(i)));
         }
         lose++;
         displayMessage("lose");
     }
-    
+
     public void playAgain() {
         findHiddenWord();
+        wordleGUI.frame.dispose();
         wordleGUI.wordleGUIMaker();
     }
-    
+
     public void exit() {
-        JOptionPane.showMessageDialog(null, "Here are your stats:\nTotal game played: " + total + "\nGames won: " + win + " (" + (100*(win/total)) + "%)\nGames lost: " + lose + " (" + (100*(lose/total)) + "%)\nOne guess: " + oneGuess + " (" + (100*(oneGuess/total)) + "%)\nTwo guesses: " + twoGuess + " (" + (100*(twoGuess/total)) + "%)\nThree guesses: " + threeGuess + " (" + (100*(threeGuess/total)) + "%)\nFour guesses: " + fourGuess + " (" + (100*(fourGuess/total)) + "%)\nFive guesses: " + fiveGuess + " (" + (100*(fiveGuess/total)) + "%)\nSix guesses: " + sixGuess + " (" + (100*(sixGuess/total)) + "%)\n\n\nGoodBye! :)", "Bye", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Here are your stats:" +
+                "\n" + "Total game played: " + (int) total +
+                "\nGames won: " + win + " (" + df.format(100 * (win / total)) + "%)" +
+                "\nGames lost: " + lose + " (" + df.format(100 * (lose / total)) + "%)" +
+                "\nOne guess: " + oneGuess + " (" + df.format(100 * (oneGuess / total)) + "%)" +
+                "\nTwo guesses: " + twoGuess + " (" + df.format(100 * (twoGuess / total)) + "%)" +
+                "\nThree guesses: " + threeGuess + " (" + df.format(100 * (threeGuess / total)) + "%)" +
+                "\nFour guesses: " + fourGuess + " (" + df.format(100 * (fourGuess / total)) + "%)" +
+                "\n" + "Five guesses: " + fiveGuess + " (" + df.format(100 * (fiveGuess / total)) + "%)" +
+                "\nSix guesses: " + sixGuess + " (" + df.format(100 * (sixGuess / total)) + "%)" +
+                "\n\n\nGoodBye! :)", "Bye", JOptionPane.PLAIN_MESSAGE);
         System.exit(0);
     }
 
@@ -204,11 +221,12 @@ public class Runner {
                 wordleGUI.frame.setVisible(true);
             }
             case "lose" -> {
-                option = JOptionPane.showConfirmDialog(null, "Sorry, you lost.\nDo you want to ", "Lost :(", JOptionPane.QUESTION_MESSAGE);
+                option = JOptionPane.showConfirmDialog(null, "Sorry, you lost.\nDo you want to play again?", "Lost :(", JOptionPane.YES_NO_OPTION);
                 if (option == JOptionPane.YES_OPTION) {
                     playAgain();
                 } else {
                     exit();
+                }
             }
             case "win" -> {
                 option = JOptionPane.showConfirmDialog(null, "Hooray, you win!\nDo you want to play again?", "Win!", JOptionPane.YES_NO_OPTION);
