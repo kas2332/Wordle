@@ -128,19 +128,60 @@ public class Runner {
     }
 
     public void checkLetters(int row) {
-        StringBuilder guess = new StringBuilder();
+        String guess, targetWord = hiddenWord;
+        StringBuilder guessBuilder = new StringBuilder();
         for (int i = 0; i < 5; i++) {
-            guess.append(wordleGUI.jLabels[row][i].getText().toLowerCase());
+            guessBuilder.append(wordleGUI.jLabels[row][i].getText().toLowerCase());
+            //wordleGUI.jLabels[row][i].setNone();
+        }
+        guess = guessBuilder.toString();
+
+        int targetIterator = 0, jLabels = 0;
+        while (targetIterator < guess.length()) {
+            if (targetWord.charAt(targetIterator) == guess.charAt(targetIterator)) {
+                wordleGUI.jLabels[row][jLabels].setRight();
+                if (targetIterator < guess.length() - 1) {
+                    targetWord = targetWord.substring(0, targetIterator) + targetWord.substring(targetIterator + 1);
+                    guess = guess.substring(0, targetIterator) + guess.substring(targetIterator + 1);
+                } else {
+                    targetWord = targetWord.substring(0, targetIterator);
+                    guess = guess.substring(0, targetIterator);
+                }
+            } else {
+                targetIterator++;
+            }
+            jLabels++;
         }
 
-        for (int i = 0; i < hiddenWord.length(); i++) {
-            if (hiddenWord.charAt(i) == guess.charAt(i)) {
-                wordleGUI.jLabels[row][i].setRight();
-            } else if (hiddenWord.indexOf(guess.charAt(i)) >= 0) {
-                wordleGUI.jLabels[row][i].setWrong();
+        jLabels = 0;
+        System.out.println(targetWord);
+        System.out.println(guess);
+        while (guess.length() > 0) {
+            if (wordleGUI.jLabels[row][jLabels].isRight) {
+                System.out.println(1);
             } else {
-                wordleGUI.jLabels[row][i].setNone();
+                char c = guess.charAt(0);
+                if (targetWord.indexOf(c) >= 0) {
+                    wordleGUI.jLabels[row][jLabels].setWrong();
+                    if (guess.length() > 1) {
+                        targetWord = targetWord.substring(0, targetWord.indexOf(c)) + targetWord.substring(targetWord.indexOf(c) + 1);
+                        guess = guess.substring(guess.indexOf(c) + 1);
+                    } else {
+                        targetWord = targetWord.substring(0, targetWord.indexOf(c));
+                        guess = guess.substring(0, guess.indexOf(c));
+                    }
+                } else {
+                    wordleGUI.jLabels[row][jLabels].setNone();
+                    if (guess.length() > 1) {
+                        guess = guess.substring(1);
+                    } else {
+                        guess = "";
+                    }
+                }
             }
+            System.out.println(targetWord);
+            System.out.println(guess);
+            jLabels++;
         }
 
         if (checkWin(row)) {
