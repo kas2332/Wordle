@@ -6,7 +6,9 @@ import java.nio.file.Paths;
 import java.text.DecimalFormat;
 
 public class Runner {
+    final static Object LOCK = new Object(); // just something to lock on;
     static WordleGUI wordleGUI;
+    static WordleIntro wordleIntro;
     static String[] words = new String[14855];
     static String hiddenWord;
     static int oneGuess = 0, twoGuess = 0, threeGuess = 0, fourGuess = 0, fiveGuess = 0, sixGuess = 0, lose = 0, win = 0;
@@ -16,10 +18,10 @@ public class Runner {
     DecimalFormat df = new DecimalFormat("#.##");
 
     public static void main(String[] args) {
+        wordleIntro = new WordleIntro();
+        wordleIntro.wordleIntroGUIMaker();
         Runner runner = new Runner();
         runner.readWordsList();
-        wordleGUI = new WordleGUI();
-        wordleGUI.wordleGUIMaker();
     }
 
     public void readWordsList() {
@@ -27,17 +29,31 @@ public class Runner {
         for (; i < 14855; i++) {
             try {
                 words[i] = Files.readAllLines(Paths.get("src/ValidWords.txt")).get(i);
+                wordleIntro.updateProgressBar(i);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
+
+        synchronized (LOCK) {
+            while (!wordleIntro.play) {
+                try {
+                    LOCK.wait();
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+        }
+
         findHiddenWord();
+        wordleGUI = new WordleGUI();
+        wordleGUI.wordleGUIMaker();
     }
 
     public void findHiddenWord() {
         total++;
         hiddenWord = words[(int) (Math.random() * 14855)];
-        System.out.println(hiddenWord);
+        //System.out.println(hiddenWord);
     }
 
     public void printChar(KeyEvent e, int row, int col) {
@@ -154,12 +170,8 @@ public class Runner {
         }
 
         jLabels = 0;
-        System.out.println(targetWord);
-        System.out.println(guess);
         while (guess.length() > 0) {
-            if (wordleGUI.jLabels[row][jLabels].isRight) {
-                System.out.println(1);
-            } else {
+            if (!wordleGUI.jLabels[row][jLabels].isRight) {
                 char c = guess.charAt(0);
                 if (targetWord.indexOf(c) >= 0) {
                     wordleGUI.jLabels[row][jLabels].setWrong();
@@ -179,8 +191,6 @@ public class Runner {
                     }
                 }
             }
-            System.out.println(targetWord);
-            System.out.println(guess);
             jLabels++;
         }
 

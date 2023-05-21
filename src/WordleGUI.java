@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class WordleGUI extends javax.swing.JPanel {
+public class WordleGUI {
     JFrame frame;
     Runner runner = new Runner();
     MyJLabel[][] jLabels = new MyJLabel[7][5];
@@ -51,11 +51,6 @@ public class WordleGUI extends javax.swing.JPanel {
             }
         }
     };
-
-    public static void main(String[] args) {
-        WordleGUI wordleGUIObj = new WordleGUI();
-        wordleGUIObj.wordleGUIMaker();
-    }
 
     public void wordleGUIMaker() {
 
