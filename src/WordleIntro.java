@@ -21,6 +21,7 @@ public class WordleIntro extends javax.swing.JPanel {
         Font fontTitle = new Font("Comic Sans MS", Font.PLAIN, 25);
 
         JFrame frame = new JFrame("Wordle");
+        frame.setIconImage(new ImageIcon(/src/WordleLogo.png).getImage());
 
         JPanel mainPanel = new JPanel();
         JPanel rulesPanel = new JPanel();
