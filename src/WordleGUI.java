@@ -51,6 +51,7 @@ public class WordleGUI {
 
 
         frame = new JFrame("Wordle");
+        frame.setIconImage(new ImageIcon(/src/WordleLogo.png).getImage());
         frame.addKeyListener(listener);
 
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
