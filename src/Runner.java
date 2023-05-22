@@ -53,7 +53,6 @@ public class Runner {
     public void findHiddenWord() {
         total++;
         hiddenWord = words[(int) (Math.random() * 14855)];
-        //System.out.println(hiddenWord);
     }
 
     public void printChar(KeyEvent e, int row, int col) {
