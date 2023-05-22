@@ -25,8 +25,7 @@ public class Runner {
     }
 
     public void readWordsList() {
-        int i = 0;
-        for (; i < 14855; i++) {
+        for (int i = 0; i < 14855; i++) {
             try {
                 words[i] = Files.readAllLines(Paths.get("src/ValidWords.txt")).get(i);
                 wordleIntro.updateProgressBar(i);

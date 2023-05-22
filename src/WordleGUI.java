@@ -13,21 +13,6 @@ public class WordleGUI {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            int row = -1, col = -1;
-            for (int r = 0; r < 7; r++) {
-                for (int c = 0; c < 5; c++) {
-                    if (jLabels[r][c].getEditable()) {
-                        row = r;
-                        col = c;
-                    }
-                }
-            }
-            if (row < 0) {
-                System.exit(-10000);
-            }
-            if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                runner.printChar(e, row, col);
-            }
         }
 
         @Override
