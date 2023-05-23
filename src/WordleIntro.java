@@ -15,9 +15,11 @@ public class WordleIntro extends javax.swing.JPanel {
         } else {
             jProgressBar1.setForeground(new Color(255 - (int) (((iterator / 7427.0) - 1) * 255), 255, 0));
         }
+        jProgressBar1.setBackground(new Color(255 - jProgressBar1.getForeground().getRed(), 255 - jProgressBar1.getForeground().getGreen(), 255 - jProgressBar1.getForeground().getBlue()));
         if (percentage >= 100) {
             playButton.setEnabled(true);
             ready = true;
+            jProgressBar1.setBackground(new Color(238, 238, 238));
         }
         while (ready) {
             for (int i = 255; i >= 64; i--) {
