@@ -23,6 +23,9 @@ public class WordleIntro extends javax.swing.JPanel {
         }
         while (ready) {
             for (int i = 255; i >= 64; i--) {
+                if (!ready) {
+                    break;
+                }
                 jProgressBar1.setForeground(new Color(0, 255, 0, i));
                 synchronized (LOCK) {
                     try {
@@ -33,6 +36,9 @@ public class WordleIntro extends javax.swing.JPanel {
                 }
             }
             for (int i = 64; i < 255; i++) {
+                if (!ready) {
+                    break;
+                }
                 jProgressBar1.setForeground(new Color(0, 255, 0, i));
                 synchronized (LOCK) {
                     try {
@@ -75,12 +81,12 @@ public class WordleIntro extends javax.swing.JPanel {
         playButton.setFont(font);
         playButton.setEnabled(false);
         playButton.addActionListener(e -> {
+            ready = false;
             play = true;
             synchronized (Runner.LOCK) {
                 Runner.LOCK.notifyAll();
             }
             frame.dispose();
-            ready = false;
         });
         //</editor-fold>
 
