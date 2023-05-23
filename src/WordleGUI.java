@@ -29,9 +29,9 @@ public class WordleGUI {
             if (row < 0) {
                 System.exit(-10000);
             }
-            if (!runner.frameVisible && ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_ALT))) {
+            if ((!runner.frameVisible || !frame.isVisible()) && ((e.getKeyCode() == KeyEvent.VK_ENTER) || (e.getKeyCode() == KeyEvent.VK_ALT))) {
                 runner.frameVisible = true;
-            } else if (runner.frameVisible) {
+            } else if (runner.frameVisible || frame.isVisible()) {
                 runner.printChar(e, row, col);
             }
         }
