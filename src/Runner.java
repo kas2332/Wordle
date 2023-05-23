@@ -25,7 +25,7 @@ public class Runner {
     }
 
     public void readWordsList() {
-        for (int i = 0; i < 14855; i++) {
+        for (int i = 0; i < words.length; i++) {
             try {
                 words[i] = Files.readAllLines(Paths.get("src/ValidWords.txt")).get(i);
                 wordleIntro.updateProgressBar(i);
@@ -50,7 +50,7 @@ public class Runner {
 
     public void findHiddenWord() {
         total++;
-        hiddenWord = words[(int) (Math.random() * 14855)];
+        hiddenWord = words[(int) (Math.random() * words.length)];
         //System.out.println(hiddenWord);
     }
 
