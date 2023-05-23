@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class WordleIntro extends javax.swing.JPanel {
+    final static Object LOCK = new Object();
     JProgressBar jProgressBar1;
     JButton playButton;
     boolean ready = false, play = false;
@@ -9,9 +10,36 @@ public class WordleIntro extends javax.swing.JPanel {
     public void updateProgressBar(int iterator) {
         int percentage = (int) Math.floor(((double) iterator / 14854) * 100);
         jProgressBar1.setValue(percentage);
+        if (iterator < 7427) {
+            jProgressBar1.setForeground(new Color(255, (int) ((iterator / 7427.0) * 255), 0));
+        } else {
+            jProgressBar1.setForeground(new Color(255 - (int) (((iterator / 7427.0) - 1) * 255), 255, 0));
+        }
         if (percentage >= 100) {
             playButton.setEnabled(true);
             ready = true;
+        }
+        while (ready) {
+            for (int i = 255; i >= 64; i--) {
+                jProgressBar1.setForeground(new Color(0, 255, 0, i));
+                synchronized (LOCK) {
+                    try {
+                        LOCK.wait(5);
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+                }
+            }
+            for (int i = 64; i < 255; i++) {
+                jProgressBar1.setForeground(new Color(0, 255, 0, i));
+                synchronized (LOCK) {
+                    try {
+                        LOCK.wait(5);
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -50,6 +78,7 @@ public class WordleIntro extends javax.swing.JPanel {
                 Runner.LOCK.notifyAll();
             }
             frame.dispose();
+            ready = false;
         });
         //</editor-fold>
 
