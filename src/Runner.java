@@ -217,7 +217,7 @@ public class Runner {
 
     public void doWin(int row) {
         for (int i = 0; i < 5; i++) {
-            wordleGUI.jLabels[6][i].setText(wordleGUI.jLabels[row][i].getText());
+            wordleGUI.jLabels[6][i].setText(wordleGUI.jLabels[row][i].getText().toUpperCase());
         }
         switch (row) {
             case 0 -> oneGuess++;
@@ -233,7 +233,7 @@ public class Runner {
 
     public void doLose() {
         for (int i = 0; i < 5; i++) {
-            wordleGUI.jLabels[6][i].setText(String.valueOf(hiddenWord.charAt(i)));
+            wordleGUI.jLabels[6][i].setText(String.valueOf(hiddenWord.charAt(i)).toUpperCase());
         }
         lose++;
         displayMessage("lose");
