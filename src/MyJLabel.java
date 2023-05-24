@@ -3,8 +3,8 @@ import java.awt.*;
 
 public class MyJLabel extends JLabel {
     boolean isEditable = false, isRight = false;
-    Font font = new Font("Comic Sans MS", Font.PLAIN, 12);
-    Color base = Color.LIGHT_GRAY, highlighted = Color.CYAN, right = Color.GREEN, wrong = Color.YELLOW, none = Color.DARK_GRAY;
+    Font font = new Font("Comic Sans MS", Font.BOLD, 12);
+    Color base = Color.LIGHT_GRAY, highlighted = Color.CYAN, right = Color.GREEN, wrong = Color.YELLOW, none = Color.GRAY;
 
     public MyJLabel() {
         super();

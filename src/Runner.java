@@ -58,6 +58,7 @@ public class Runner {
         boolean backspace = (e.getKeyCode() == KeyEvent.VK_BACK_SPACE);
         boolean letter = (e.getKeyCode() >= KeyEvent.VK_A && e.getKeyCode() <= KeyEvent.VK_Z);
         boolean enter = (e.getKeyCode() == KeyEvent.VK_ENTER);
+        frameVisible = true;
 
         if (backspace || letter || enter) {
             wordleGUI.jLabels[row][col].setEditable(false);
