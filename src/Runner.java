@@ -9,13 +9,13 @@ public class Runner {
     final static Object LOCK = new Object(); // just something to lock on;
     static WordleGUI wordleGUI;
     static WordleIntro wordleIntro;
-    static String[] words = new String[14855];
+    final static String[] words = new String[14855];
     static String hiddenWord;
     static int oneGuess = 0, twoGuess = 0, threeGuess = 0, fourGuess = 0, fiveGuess = 0, sixGuess = 0, lose = 0, win = 0;
     static double total = 0;
-    char[] alphabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    final char[] alphabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
     boolean frameVisible = true;
-    DecimalFormat df = new DecimalFormat("#.##");
+    final DecimalFormat df = new DecimalFormat("#.##");
 
     public static void main(String[] args) {
         wordleIntro = new WordleIntro();

@@ -4,9 +4,9 @@ import java.awt.event.KeyListener;
 
 public class WordleGUI {
     JFrame frame;
-    Runner runner = new Runner();
-    MyJLabel[][] jLabels = new MyJLabel[7][5];
-    KeyListener listener = new KeyListener() {
+    final Runner runner = new Runner();
+    final MyJLabel[][] jLabels = new MyJLabel[7][5];
+    final KeyListener listener = new KeyListener() {
         @Override
         public void keyTyped(KeyEvent e) {
         }
