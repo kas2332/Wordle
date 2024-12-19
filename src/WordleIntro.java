@@ -80,7 +80,7 @@ public class WordleIntro extends javax.swing.JPanel {
         playButton = new JButton();
         playButton.setFont(font);
         playButton.setEnabled(false);
-        playButton.addActionListener(e -> {
+        playButton.addActionListener(_ -> {
             ready = false;
             play = true;
             synchronized (Runner.LOCK) {

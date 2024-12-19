@@ -80,7 +80,7 @@ public class Runner {
     }
 
     public void doBackspace(int row, int col) {
-        if (wordleGUI.jLabels[row][col].getText().equals("") && col != 0) {
+        if (wordleGUI.jLabels[row][col].getText().isEmpty() && col != 0) {
             wordleGUI.jLabels[row][col - 1].setText("");
             wordleGUI.jLabels[row][col - 1].setEditable(true);
         } else {
@@ -115,6 +115,7 @@ public class Runner {
         for (char c : alphabet) {
             if (c == e.getKeyChar()) {
                 found = true;
+                break;
             }
         }
         return found;
@@ -169,7 +170,7 @@ public class Runner {
         }
 
         jLabels = 0;
-        while (guess.length() > 0) {
+        while (!guess.isEmpty()) {
             if (!wordleGUI.jLabels[row][jLabels].isRight) {
                 char c = guess.charAt(0);
                 if (targetWord.indexOf(c) >= 0) {
